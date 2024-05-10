@@ -36,7 +36,7 @@ In this section, you’ll use Python and SQLAlchemy to do a basic climate analys
 IMPORTANT
 Remember to close your session at the end of your notebook.
 
-Perform a precipitation analysis and then a station analysis by completing the steps in the following two subsections.
+5) Perform a precipitation analysis and then a station analysis by completing the steps in the following two subsections.
 
 ### Precipitation Analysis
 1) Find the most recent date in the dataset.
