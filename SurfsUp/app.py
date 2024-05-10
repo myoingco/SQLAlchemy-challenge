@@ -36,6 +36,10 @@ Station = Base.classes.station
 
 app = Flask(__name__)
 
+#################################################
+# Flask Routes
+#################################################
+
 @app.route("/")
 def welcome():
     """List all available api routes."""
@@ -88,37 +92,6 @@ def stations():
     return jsonify(dict(active_stations))
 
 
-@app.route("/api/v1.0/tobs")
-def tobs():
-    
-    year_ago = dt.date(2017,8,23) - dt.timedelta(days= 365)
-    year_temp = session.query(Measurement.tobs).\
-        filter(Measurement.date >= year_ago, Measurement.station == 'USC00519281').\
-         order_by(Measurement.tobs).all()
-
-    yr_temp = []
-    for y_t in year_temp:
-        yrtemp = {}
-        yrtemp["tobs"] = y_t.tobs
-        yr_temp.append(yrtemp)
-
-    return jsonify(yr_temp)
-
-
-def calc_start_temps(start_date):
-    """TMIN, TAVG, and TMAX for a list of dates.
-    
-    Args:
-        start_date (string): A date string in the format %Y-%m-%d
-        end_date (string): A date string in the format %Y-%m-%d
-        
-    Returns:
-        TMIN, TAVE, and TMAX
-    """
-    
-    return session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-        filter(Measurement.date >= start_date).all()
-
 @app.route("/api/v1.0/<start>")
     
 def start_date(start):
@@ -162,11 +135,6 @@ def start_end_date(start, end):
     return jsonify(temp_dict)
     
 
-
-
 if __name__ == '__main__':
     app.run(debug=True)
 
-#################################################
-# Flask Routes
-#################################################
